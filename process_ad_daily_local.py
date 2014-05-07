@@ -88,6 +88,7 @@ def main():
     hash_list = []
     tweet_list = dict()
     tweet_data = dict()
+    tweet_hash_data = dict()
     lang_hist = dict()
     gender_hist = dict()
     ad_count = 0
@@ -112,12 +113,15 @@ def main():
                     #print tag
                     if tag in hashtags :
                         hashtags[tag][0]=hashtags[tag][0]+1
-                        if user_val in tweet_list :
+                        if user_val not in tweet_hash_data[tag] :
                             hashtags[tag][1] +=1
+                            tweet_hash_data[tag].append(user_val)
                     else :
                         hashtags.setdefault(tag,[])
                         hashtags[tag].append(1)
                         hashtags[tag].append(1)
+                        tweet_hash_data.setdefault(tag,[])
+                        tweet_hash_data[tag].append(user_val)
                     hash_list.append(tag)
                 user_name = json_data["interactions"][k]["twitter"]["user"]["screen_name"]
                 language = json_data["interactions"][k]["twitter"]["user"]["lang"]
